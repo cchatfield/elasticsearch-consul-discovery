@@ -65,9 +65,10 @@ import java.util.Optional;
 
 public final class ConsulService {
 	private static final String CONSUL_HEALTH_CHECK_API_ENDPOINT_TEMPLATE =
-			"http://localhost:%d/v1/health/service/%s?%s";
+			"http://%s:%d/v1/health/service/%s?%s";
 
-	private final int consulAgentLocalWebServicePort;
+	private final int consulAgentWebServicePort;
+	private final String consulAgentWebServiceAddress;
 	private final String tag;
 
 	/**
@@ -75,8 +76,9 @@ public final class ConsulService {
 	 *                   it is 8500
 	 * @param tag        if not null it will filter query on the tags
 	 */
-	public ConsulService(final int consulPort, final String tag) {
-		this.consulAgentLocalWebServicePort = consulPort;
+	public ConsulService(final String consulAddress, final int consulPort, final String tag) {
+		this.consulAgentWebServiceAddress = consulAddress;
+		this.consulAgentWebServicePort = consulPort;
 		this.tag = tag;
 	}
 
@@ -130,7 +132,9 @@ public final class ConsulService {
 			queryParam.append(tag.trim());
 		}
 		return String.format(CONSUL_HEALTH_CHECK_API_ENDPOINT_TEMPLATE,
-				consulAgentLocalWebServicePort, serviceName,
+				consulAgentWebServiceAddress,
+				consulAgentWebServicePort,
+				serviceName,
 				queryParam.toString());
 	}
 }

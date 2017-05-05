@@ -99,7 +99,8 @@ public class ConsulDiscoveryPlugin extends Plugin implements DiscoveryPlugin {
     @Override
     public List<Setting<?>> getSettings() {
         return Arrays.asList(
-                ConsulUnicastHostsProvider.CONSUL_LOCALWSPORT,
+                ConsulUnicastHostsProvider.CONSUL_WSADDRESS,
+                ConsulUnicastHostsProvider.CONSUL_WSPORT,
                 ConsulUnicastHostsProvider.CONSUL_SERVICENAMES,
                 ConsulUnicastHostsProvider.CONSUL_TAG
         );
